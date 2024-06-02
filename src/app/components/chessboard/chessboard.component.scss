@@ -1,0 +1,25 @@
+.chessboard {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: solid 1px red;
+  table.grid {
+    tbody {
+      tr {
+        td.tile {
+          height: 50px;
+          width: 50px;
+          .piece {
+            background-image: url("/src/assets/images/chess_pieces/wk.png");
+          }
+        }
+        td.dark {
+          background-color: #b88762;
+        }
+        td.light {
+          background-color: #edd6b0;
+        }
+      }
+    }
+  }
+}
