@@ -6,7 +6,12 @@
           @for (tile of rank; let j = $index; track j) {
             <td [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
               <div class="piece">
-                <img [src]="appData.wk" alt="" />
+                <img
+                  *ngIf="board[i][j]"
+                  [src]="appData.PIECE_IMG[this.board[i][j]!.color ? 1 : 0][this.board[i][j]!.piece]"
+                  alt="{{ appData.PIECE_IMG[this.board[i][j]!.color ? 1 : 0][this.board[i][j]!.piece] }}"
+                  [width]="globalConfig.tileSize"
+                  [height]="globalConfig.tileSize" />
               </div>
             </td>
           }
