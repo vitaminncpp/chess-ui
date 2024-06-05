@@ -1,5 +1,5 @@
 export default class GlobalConfig {
-  public tileSize = 50;
+  public tileSize = 80;
 
   initialPosition: Array<Array<{ color: boolean; piece: 0 | 1 | 2 | 3 | 4 | 5 } | null>> = [
     [
