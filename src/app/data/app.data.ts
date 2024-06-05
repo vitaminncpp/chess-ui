@@ -11,7 +11,7 @@ export class AppData {
   public wn: string = "/assets/images/chess_pieces/wn.png";
   public wp: string = "/assets/images/chess_pieces/wp.png";
 
-  public bk: string = "/assets/images/chess_pieces/bn.png";
+  public bk: string = "/assets/images/chess_pieces/bk.png";
   public bq: string = "/assets/images/chess_pieces/bq.png";
   public br: string = "/assets/images/chess_pieces/br.png";
   public bb: string = "/assets/images/chess_pieces/bb.png";

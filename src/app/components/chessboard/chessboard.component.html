@@ -1,7 +1,7 @@
 <div class="chessboard">
   <table class="grid" id="chessgrid">
     <tbody>
-      @for (rank of chessboard.board; let i = $index; track i) {
+      @for (rank of board; let i = $index; track i) {
         <tr class="rank">
           @for (tile of rank; let j = $index; track j) {
             <td [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
