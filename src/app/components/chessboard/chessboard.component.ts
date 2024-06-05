@@ -6,7 +6,7 @@ import GlobalConfig from "../../config/global.config";
 import { CommonModule } from "@angular/common";
 import "jquery";
 
-declare var $: any;
+declare let $: any;
 
 @Component({
   selector: "app-chessboard",
@@ -30,7 +30,9 @@ export class ChessboardComponent {
     this.chessboard = this.game.getBoard();
     this.board = globalConfig.initialPosition;
   }
-  ngOnInit() {}
+  ngOnInit() {
+    /* TODO document why this method 'ngOnInit' is empty */
+  }
   ngAfterViewChecked(): void {
     console.log("changes");
     $(".piece").draggable({
@@ -38,12 +40,12 @@ export class ChessboardComponent {
       // snap: "table.grid#chessgrid td",
       revert: true,
     });
-    // $("table.grid td").droppable({
-    //   drop: (e: any, ui: any) => {
-    //     e.target.innerHTML = "";
-    //     e.target.appendChild(ui.draggable[0]);
-    //     ui.draggable.css({ top: "0px", left: "0px" });
-    //   },
-    // });
+    $("table.grid td").droppable({
+      drop: (e: any, ui: any) => {
+        e.target.innerHTML = "";
+        e.target.appendChild(ui.draggable[0]);
+        ui.draggable.css({ top: "0px", left: "0px" });
+      },
+    });
   }
 }
