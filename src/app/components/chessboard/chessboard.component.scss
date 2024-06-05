@@ -10,8 +10,12 @@
           height: 80px;
           width: 80px;
           .piece {
+            cursor: grab;
             height: 80px;
             width: 80px;
+            :active {
+              cursor: grabbing;
+            }
           }
         }
         td.dark {
