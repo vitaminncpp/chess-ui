@@ -1,7 +1,8 @@
 <div class="chessboard">
   <table class="grid" id="chessgrid">
+    <th></th>
     <tbody>
-      @for (rank of board; let i = $index; track i) {
+      @for (rank of board.slice().reverse(); let i = $index; track i) {
         <tr class="rank">
           @for (tile of rank; let j = $index; track j) {
             <td [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
@@ -9,8 +10,8 @@
                 <div class="piece">
                   <img
                     *ngIf="board[i][j]"
-                    [src]="appData.PIECE_IMG[this.board[i][j]!.color ? 1 : 0][this.board[i][j]!.piece]"
-                    alt="{{ appData.PIECE_IMG[this.board[i][j]!.color ? 1 : 0][this.board[i][j]!.piece] }}"
+                    [src]="appData.PIECE_IMG[tile!.color ? 1 : 0][tile!.piece]"
+                    alt="{{ appData.PIECE_IMG[tile!.color ? 1 : 0][tile!.piece] }}"
                     [width]="globalConfig.tileSize"
                     [height]="globalConfig.tileSize" />
                 </div>
