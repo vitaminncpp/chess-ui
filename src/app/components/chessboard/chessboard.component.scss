@@ -7,10 +7,15 @@
     tbody {
       tr {
         td.tile {
-          height: 50px;
-          width: 50px;
+          height: 80px;
+          width: 80px;
           .piece {
-            background-image: url("/src/assets/images/chess_pieces/wk.png");
+            cursor: grab;
+            height: 80px;
+            width: 80px;
+            :active {
+              cursor: grabbing;
+            }
           }
         }
         td.dark {
