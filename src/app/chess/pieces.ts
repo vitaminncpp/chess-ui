@@ -16,24 +16,76 @@ export abstract class Piece {
   protected alive = true;
   protected board: Chessboard;
 
-  constructor(board: Chessboard, color: boolean) {
+  constructor(board: Chessboard, x: number, y: number, color: boolean) {
     this.board = board;
+    this.x = x;
+    this.y = y;
     this.color = color;
   }
+  abstract updateMoveMap(): boolean;
+  abstract updateAttackMap(): boolean;
+}
 
-  public setPlayer(player: Player) {
-    this.player = player;
+export class Pawn extends Piece {
+  updateMoveMap(): boolean {
+    return false;
+  }
+
+  updateAttackMap(): boolean {
+    return false;
   }
 }
 
-export class Pawn extends Piece {}
+export class Knight extends Piece {
+  updateMoveMap(): boolean {
+    return false;
+  }
 
-export class Knight extends Piece {}
+  updateAttackMap(): boolean {
+    return false;
+  }
+}
 
-export class Bishop extends Piece {}
+export class Bishop extends Piece {
+  updateMoveMap(): boolean {
+    return false;
+  }
 
-export class Rook extends Piece {}
+  updateAttackMap(): boolean {
+    return false;
+  }
+}
 
-export class Queen extends Piece {}
+export class Rook extends Piece {
+  updateMoveMap(): boolean {
+    return false;
+  }
 
-export class King extends Piece {}
+  updateAttackMap(): boolean {
+    return false;
+  }
+}
+
+export class Queen extends Piece {
+  updateMoveMap(): boolean {
+    return false;
+  }
+
+  updateAttackMap(): boolean {
+    return false;
+  }
+}
+
+export class King extends Piece {
+  check: boolean = false;
+  constructor(board: Chessboard, x: number, y: number, color: boolean) {
+    super(board, x, y, color);
+  }
+  updateMoveMap(): boolean {
+    return false;
+  }
+
+  updateAttackMap(): boolean {
+    return false;
+  }
+}
