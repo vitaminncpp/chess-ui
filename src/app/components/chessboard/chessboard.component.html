@@ -6,15 +6,13 @@
         <tr class="rank">
           @for (tile of rank; let j = $index; track j) {
             <td [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
-              <div class="tile">
-                <div class="piece">
-                  <img
-                    *ngIf="board[i][j]"
-                    [src]="appData.PIECE_IMG[tile!.color ? 1 : 0][tile!.piece]"
-                    alt="{{ appData.PIECE_IMG[tile!.color ? 1 : 0][tile!.piece] }}"
-                    [width]="globalConfig.tileSize"
-                    [height]="globalConfig.tileSize" />
-                </div>
+              <div class="piece">
+                <img
+                  *ngIf="board[i][j]"
+                  [src]="appData.PIECE_IMG[tile!.color ? 1 : 0][tile!.piece]"
+                  alt="{{ appData.PIECE_IMG[tile!.color ? 1 : 0][tile!.piece] }}"
+                  [width]="globalConfig.tileSize"
+                  [height]="globalConfig.tileSize" />
               </div>
             </td>
           }
