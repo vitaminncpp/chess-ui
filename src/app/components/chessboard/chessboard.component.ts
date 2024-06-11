@@ -2,9 +2,10 @@ import { Component } from "@angular/core";
 import { AppData, appData } from "../../data/app.data";
 import { Game } from "../../chess/game";
 import { Chessboard } from "../../chess/Chessboard";
-import { globalConfig, GlobalConfig } from "../../config/global.config";
+import { globalConfig } from "../../config/global.config";
 import { CommonModule } from "@angular/common";
 import "jquery";
+import { PieceType } from "../../type/chesstypes";
 
 declare let $: any;
 
@@ -18,9 +19,9 @@ declare let $: any;
 export class ChessboardComponent {
   protected game: Game;
   protected chessboard: Chessboard;
-  protected board: Array<Array<{ color: boolean; piece: 0 | 1 | 2 | 3 | 4 | 5 } | null>>;
+  protected board: Array<Array<{ color: boolean; piece: PieceType } | null>>;
   protected orientation: boolean = true;
-  protected globalConfig: GlobalConfig = globalConfig;
+  protected globalConfig = globalConfig;
   protected appData: AppData = appData;
 
   constructor() {
@@ -28,14 +29,11 @@ export class ChessboardComponent {
     this.chessboard = this.game.getBoard();
     this.board = globalConfig.initialPosition;
   }
-  ngOnInit() {
-    /* TODO document why this method 'ngOnInit' is empty */
-  }
+  ngOnInit() {}
   ngAfterViewChecked(): void {
     console.log("changes");
     $(".piece").draggable({
-      containment: "table.grid#chessgrid", // constraints the drag to the chessboard only
-      // snap: "table.grid#chessgrid td",
+      containment: "table.grid#chessgrid",
       revert: true,
     });
     $("table.grid td").droppable({
