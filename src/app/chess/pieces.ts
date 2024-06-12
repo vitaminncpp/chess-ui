@@ -1,4 +1,4 @@
-import { Chessboard } from "./Chessboard";
+import { Chessboard } from "./chessboard";
 import { Player } from "./players";
 import { PiecePosition, PieceType, PieceValue } from "../type/chesstypes";
 import { globalConfig } from "../config/global.config";
@@ -23,6 +23,22 @@ export abstract class Piece {
     this.x = x;
     this.y = y;
     this.color = color;
+    this.board.board[x][y].piece = this;
+    this.init();
+  }
+  init() {
+    this.moveMap = [];
+    this.attackMap = [];
+    for (let i = 0; i < globalConfig.SQUARE_SIZE; i++) {
+      this.moveMap.push([]);
+      this.attackMap.push([]);
+      for (let j = 0; j < globalConfig.SQUARE_SIZE; j++) {
+        this.moveMap[i].push(false);
+        this.attackMap[i].push(false);
+      }
+    }
+    this.reset();
+    this.updateMoveMap();
   }
   abstract updateMoveMap(): boolean;
   abstract updateAttackMap(): boolean;
@@ -75,6 +91,13 @@ export abstract class Piece {
   }
   getY() {
     return this.y;
+  }
+  getMoveMap(): boolean[][] {
+    return this.moveMap;
+  }
+
+  getAttackMap(): boolean[][] {
+    return this.attackMap;
   }
 }
 
@@ -132,13 +155,52 @@ export class King extends Piece {
   check: boolean = false;
   constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
     super(board, x, y, color);
+    this.value = globalConfig.KING_VALUE;
+    this.type = globalConfig.KING_TYPE;
     this.check = false;
   }
   updateMoveMap(): boolean {
-    return false;
+    if (this.x - 1 >= 0) {
+      this.moveMap[this.x - 1][this.y] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x + 1][this.y] = true;
+    }
+    if (this.y - 1 >= 0) {
+      this.moveMap[this.x][this.y - 1] = true;
+    }
+    if (this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x][this.y + 1] = true;
+    }
+
+    if (this.x - 1 >= 0 && this.y - 1 >= 0) {
+      this.moveMap[this.x - 1][this.y - 1] = true;
+    }
+    if (this.x - 1 >= 0 && this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x - 1][this.y + 1] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y - 1 >= 0) {
+      this.moveMap[this.x + 1][this.y - 1] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x + 1][this.y + 1] = true;
+    }
+    return true;
   }
 
   updateAttackMap(): boolean {
-    return false;
+    if (this.x - 1 >= 0 && this.y - 1 >= 0) {
+      this.attackMap[this.x - 1][this.y - 1] = true;
+    }
+    if (this.x - 1 >= 0 && this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.attackMap[this.x - 1][this.y + 1] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y - 1 >= 0) {
+      this.attackMap[this.x + 1][this.y - 1] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.attackMap[this.x + 1][this.y + 1] = true;
+    }
+    return true;
   }
 }
