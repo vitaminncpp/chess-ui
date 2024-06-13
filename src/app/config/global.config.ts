@@ -1,4 +1,4 @@
-import { PieceType, PieceValue } from "../type/chesstypes";
+import { PieceType, PieceValue } from "../type/chess.type";
 
 export const globalConfig = {
   PAWN_VALUE: 1 as PieceValue,

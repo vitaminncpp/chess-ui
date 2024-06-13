@@ -1,6 +1,6 @@
 import { Chessboard } from "./chessboard";
 import { Player } from "./players";
-import { PiecePosition, PieceType, PieceValue } from "../type/chesstypes";
+import { PiecePosition, PieceType, PieceValue } from "../type/chess.type";
 import { globalConfig } from "../config/global.config";
 
 export abstract class Piece {
@@ -189,6 +189,19 @@ export class King extends Piece {
   }
 
   updateAttackMap(): boolean {
+    if (this.x - 1 >= 0) {
+      this.attackMap[this.x - 1][this.y] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE) {
+      this.attackMap[this.x + 1][this.y] = true;
+    }
+    if (this.y - 1 >= 0) {
+      this.attackMap[this.x][this.y - 1] = true;
+    }
+    if (this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.attackMap[this.x][this.y + 1] = true;
+    }
+
     if (this.x - 1 >= 0 && this.y - 1 >= 0) {
       this.attackMap[this.x - 1][this.y - 1] = true;
     }

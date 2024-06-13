@@ -5,7 +5,7 @@ import { Chessboard, Tile } from "../../chess/chessboard";
 import { globalConfig } from "../../config/global.config";
 import { CommonModule } from "@angular/common";
 import "jquery";
-import { PieceType } from "../../type/chesstypes";
+import { PieceType } from "../../type/chess.type";
 
 declare let $: any;
 
