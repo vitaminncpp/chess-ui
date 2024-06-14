@@ -14,6 +14,9 @@ export class Game {
   getBoard() {
     return this.board;
   }
+  move(move: Move): Move {
+    return move;
+  }
 }
 
 export class Move {

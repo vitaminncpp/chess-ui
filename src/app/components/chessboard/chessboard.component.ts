@@ -51,10 +51,7 @@ export class ChessboardComponent {
     });
   }
   onPieceGrab(x: number, y: number) {
-    console.log("clicked");
-
     this.moveMap = this.chessboard.board[x][y].piece!.getMoveMap();
-    console.log(this.moveMap);
     this.moveMap.forEach((rank, i) => {
       rank.forEach((tile, j) => {
         if (tile) {
