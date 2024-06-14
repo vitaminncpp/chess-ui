@@ -23,13 +23,13 @@ export class ChessboardComponent {
   protected orientation: boolean = true;
   protected globalConfig = globalConfig;
   protected appData: AppData = appData;
+  protected moveMap: boolean[][] | null = null;
 
   constructor() {
     this.game = new Game();
     this.chessboard = this.game.getBoard();
     this.board = globalConfig.initialPosition;
     this.updateBoard();
-    console.log(this.game);
   }
   updateBoard(): boolean {
     this.chessboard.board.forEach((rank: Tile[], i: number) => {
@@ -53,8 +53,9 @@ export class ChessboardComponent {
   onPieceGrab(x: number, y: number) {
     console.log("clicked");
 
-    const moveMap: boolean[][] = this.chessboard.board[x][y].piece!.getMoveMap();
-    moveMap.forEach((rank, i) => {
+    this.moveMap = this.chessboard.board[x][y].piece!.getMoveMap();
+    console.log(this.moveMap);
+    this.moveMap.forEach((rank, i) => {
       rank.forEach((tile, j) => {
         if (tile) {
           $(`#${i}-${j}`).droppable({
@@ -62,14 +63,34 @@ export class ChessboardComponent {
               e.target.innerHTML = "";
               e.target.appendChild(ui.draggable[0]);
               ui.draggable.css({ top: "0px", left: "0px" });
+              this.clearMovableTiles();
             },
+          });
+          $(`#${i}-${j}`).css({
+            border: "solid 1px red",
           });
         } else {
           try {
+            $(`#${i}-${j}`).css({
+              border: "none",
+            });
             $(`#${i}-${j}`).droppable("destroy");
           } catch (err) {}
         }
       });
     });
+  }
+
+  clearMovableTiles() {
+    for (let i = 0; i < globalConfig.SQUARE_SIZE; i++) {
+      for (let j = 0; j < globalConfig.SQUARE_SIZE; j++) {
+        try {
+          $(`#${i}-${j}`).css({
+            border: "none",
+          });
+        } catch (err) {}
+      }
+    }
+    this.moveMap = null;
   }
 }
