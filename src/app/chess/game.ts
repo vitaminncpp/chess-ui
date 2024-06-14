@@ -15,7 +15,7 @@ export class Game {
     return this.board;
   }
   move(move: Move): Move {
-    return move;
+    return this.board.move(move);
   }
 }
 
@@ -48,5 +48,13 @@ export class Move {
     this.xDest = x;
     this.yDest = y;
     return true;
+  }
+
+  reset() {
+    this.xSrc = -1;
+    this.ySrc = -1;
+    this.xDest = -1;
+    this.yDest = -1;
+    this.type = ChessMove.NOT_APPLICABLE;
   }
 }

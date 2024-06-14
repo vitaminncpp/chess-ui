@@ -1,5 +1,6 @@
 import { Piece } from "./pieces";
 import { globalConfig } from "../config/global.config";
+import { Move } from "./game";
 
 export class Chessboard {
   board: Tile[][] = [];
@@ -12,6 +13,14 @@ export class Chessboard {
         this.board[i].push(new Tile());
       }
     }
+  }
+
+  move(move: Move): Move {
+    this.board[move.xDest][move.yDest].piece = this.board[move.xSrc][move.ySrc].piece!;
+    this.board[move.xSrc][move.ySrc].piece = null;
+    const retMove: Move = this.board[move.xDest][move.yDest].piece!.moveTo(move.xDest, move.yDest);
+    retMove.setSrc(move.xSrc, move.ySrc);
+    return retMove;
   }
 }
 

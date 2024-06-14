@@ -2,6 +2,8 @@ import { Chessboard } from "./chessboard";
 import { Player } from "./players";
 import { PiecePosition, PieceType, PieceValue } from "../type/chess.type";
 import { globalConfig } from "../config/global.config";
+import { Move } from "./game";
+import { ChessMove } from "../type/chess.enum";
 
 export abstract class Piece {
   protected x: PiecePosition = -1;
@@ -40,6 +42,11 @@ export abstract class Piece {
     this.reset();
     this.updateMoveMap();
   }
+  update() {
+    this.reset();
+    this.updateMoveMap();
+    this.updateAttackMap();
+  }
   abstract updateMoveMap(): boolean;
   abstract updateAttackMap(): boolean;
   resetMoveMap(): boolean {
@@ -77,7 +84,15 @@ export abstract class Piece {
     this.alive = true;
     return this.alive;
   }
-  moveTo(x: PiecePosition, y: PiecePosition) {}
+  moveTo(x: PiecePosition, y: PiecePosition): Move {
+    this.x = x;
+    this.y = y;
+    this.update();
+    const move = new Move(this.color);
+    move.setDest(this.x, this.y);
+    move.type = ChessMove.REGULAR_MOVE;
+    return move;
+  }
   testForMoveMap(x: PiecePosition, y: PiecePosition): boolean {
     return false;
   }
