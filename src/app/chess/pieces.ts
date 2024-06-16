@@ -40,7 +40,6 @@ export abstract class Piece {
       }
     }
     this.reset();
-    this.updateMoveMap();
   }
   update() {
     this.reset();
@@ -134,28 +133,68 @@ export class Knight extends Piece {
   }
   updateMoveMap(): boolean {
     if (this.x + 2 < globalConfig.SQUARE_SIZE && this.y + 1 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x + 2][this.y + 1] = true;
+      if (
+        !this.board.board[this.x + 2][this.y + 1].piece ||
+        this.board.board[this.x + 2][this.y + 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 2][this.y + 1] = true;
+      }
     }
     if (this.x + 2 < globalConfig.SQUARE_SIZE && this.y - 1 >= 0) {
-      this.moveMap[this.x + 2][this.y - 1] = true;
+      if (
+        !this.board.board[this.x + 2][this.y - 1].piece ||
+        this.board.board[this.x + 2][this.y - 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 2][this.y - 1] = true;
+      }
     }
     if (this.x - 2 >= 0 && this.y + 1 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x - 2][this.y + 1] = true;
+      if (
+        !this.board.board[this.x - 2][this.y + 1].piece ||
+        this.board.board[this.x - 2][this.y + 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 2][this.y + 1] = true;
+      }
     }
     if (this.x - 2 >= 0 && this.y - 1 >= 0) {
-      this.moveMap[this.x - 2][this.y - 1] = true;
+      if (
+        !this.board.board[this.x - 2][this.y - 1].piece ||
+        this.board.board[this.x - 2][this.y - 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 2][this.y - 1] = true;
+      }
     }
     if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y + 2 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x + 1][this.y + 2] = true;
+      if (
+        !this.board.board[this.x + 1][this.y + 2].piece ||
+        this.board.board[this.x + 1][this.y + 2].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 1][this.y + 2] = true;
+      }
     }
     if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y - 2 >= 0) {
-      this.moveMap[this.x + 1][this.y - 2] = true;
+      if (
+        !this.board.board[this.x + 1][this.y - 2].piece ||
+        this.board.board[this.x + 1][this.y - 2].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 1][this.y - 2] = true;
+      }
     }
     if (this.x - 1 >= 0 && this.y + 2 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x - 1][this.y + 2] = true;
+      if (
+        !this.board.board[this.x - 1][this.y + 2].piece ||
+        this.board.board[this.x - 1][this.y + 2].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 1][this.y + 2] = true;
+      }
     }
     if (this.x - 1 >= 0 && this.y - 2 >= 0) {
-      this.moveMap[this.x - 1][this.y - 2] = true;
+      if (
+        !this.board.board[this.x - 1][this.y - 2].piece ||
+        this.board.board[this.x - 1][this.y - 2].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 1][this.y - 2] = true;
+      }
     }
     return true;
   }
@@ -205,29 +244,69 @@ export class King extends Piece {
   }
   updateMoveMap(): boolean {
     if (this.x - 1 >= 0) {
-      this.moveMap[this.x - 1][this.y] = true;
+      if (
+        !this.board.board[this.x - 1][this.y].piece ||
+        this.board.board[this.x - 1][this.y].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 1][this.y] = true;
+      }
     }
     if (this.x + 1 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x + 1][this.y] = true;
+      if (
+        !this.board.board[this.x + 1][this.y].piece ||
+        this.board.board[this.x + 1][this.y].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 1][this.y] = true;
+      }
     }
     if (this.y - 1 >= 0) {
-      this.moveMap[this.x][this.y - 1] = true;
+      if (
+        !this.board.board[this.x][this.y - 1].piece ||
+        this.board.board[this.x][this.y - 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x][this.y - 1] = true;
+      }
     }
     if (this.y + 1 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x][this.y + 1] = true;
+      if (
+        !this.board.board[this.x][this.y + 1].piece ||
+        this.board.board[this.x][this.y + 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x][this.y + 1] = true;
+      }
     }
 
     if (this.x - 1 >= 0 && this.y - 1 >= 0) {
-      this.moveMap[this.x - 1][this.y - 1] = true;
+      if (
+        !this.board.board[this.x - 1][this.y - 1].piece ||
+        this.board.board[this.x - 1][this.y - 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 1][this.y - 1] = true;
+      }
     }
     if (this.x - 1 >= 0 && this.y + 1 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x - 1][this.y + 1] = true;
+      if (
+        !this.board.board[this.x - 1][this.y + 1].piece ||
+        this.board.board[this.x - 1][this.y + 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x - 1][this.y + 1] = true;
+      }
     }
     if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y - 1 >= 0) {
-      this.moveMap[this.x + 1][this.y - 1] = true;
+      if (
+        !this.board.board[this.x + 1][this.y - 1].piece ||
+        this.board.board[this.x + 1][this.y - 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 1][this.y - 1] = true;
+      }
     }
     if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y + 1 < globalConfig.SQUARE_SIZE) {
-      this.moveMap[this.x + 1][this.y + 1] = true;
+      if (
+        !this.board.board[this.x + 1][this.y + 1].piece ||
+        this.board.board[this.x + 1][this.y + 1].piece!.getColor() !== this.color
+      ) {
+        this.moveMap[this.x + 1][this.y + 1] = true;
+      }
     }
     return true;
   }

@@ -19,6 +19,7 @@ export class Chessboard {
     new Knight(this, 4, 3, true);
     new Knight(this, 7, 3, false);
     new Knight(this, 4, 5, false);
+    this.update();
   }
 
   move(move: Move): Move {
@@ -27,6 +28,14 @@ export class Chessboard {
     const retMove: Move = this.board[move.xDest][move.yDest].piece!.moveTo(move.xDest, move.yDest);
     retMove.setSrc(move.xSrc, move.ySrc);
     return retMove;
+  }
+  update(): boolean {
+    this.board.forEach(rank => {
+      rank.forEach(tile => {
+        tile.piece?.update();
+      });
+    });
+    return true;
   }
 }
 

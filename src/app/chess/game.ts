@@ -7,13 +7,17 @@ export class Game {
 
   constructor() {
     this.board = new Chessboard();
-
   }
   getBoard() {
     return this.board;
   }
   move(move: Move): Move {
-    return this.board.move(move);
+    const ret: Move = this.board.move(move);
+    this.update();
+    return ret;
+  }
+  update(): boolean {
+    return this.board.update();
   }
 }
 
