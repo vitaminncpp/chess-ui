@@ -1,4 +1,4 @@
-import { Piece } from "./pieces";
+import { King, Knight, Piece } from "./pieces";
 import { globalConfig } from "../config/global.config";
 import { Move } from "./game";
 
@@ -13,6 +13,12 @@ export class Chessboard {
         this.board[i].push(new Tile());
       }
     }
+    new King(this, 1, 2, true);
+    new Knight(this, 2, 3, true);
+    new Knight(this, 0, 3, true);
+    new Knight(this, 4, 3, true);
+    new Knight(this, 7, 3, false);
+    new Knight(this, 4, 5, false);
   }
 
   move(move: Move): Move {

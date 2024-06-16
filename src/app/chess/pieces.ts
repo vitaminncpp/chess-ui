@@ -127,8 +127,37 @@ export class Pawn extends Piece {
 }
 
 export class Knight extends Piece {
+  constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
+    super(board, x, y, color);
+    this.value = globalConfig.KNIGHT_VALUE;
+    this.type = globalConfig.KNIGHT_TYPE;
+  }
   updateMoveMap(): boolean {
-    return false;
+    if (this.x + 2 < globalConfig.SQUARE_SIZE && this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x + 2][this.y + 1] = true;
+    }
+    if (this.x + 2 < globalConfig.SQUARE_SIZE && this.y - 1 >= 0) {
+      this.moveMap[this.x + 2][this.y - 1] = true;
+    }
+    if (this.x - 2 >= 0 && this.y + 1 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x - 2][this.y + 1] = true;
+    }
+    if (this.x - 2 >= 0 && this.y - 1 >= 0) {
+      this.moveMap[this.x - 2][this.y - 1] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y + 2 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x + 1][this.y + 2] = true;
+    }
+    if (this.x + 1 < globalConfig.SQUARE_SIZE && this.y - 2 >= 0) {
+      this.moveMap[this.x + 1][this.y - 2] = true;
+    }
+    if (this.x - 1 >= 0 && this.y + 2 < globalConfig.SQUARE_SIZE) {
+      this.moveMap[this.x - 1][this.y + 2] = true;
+    }
+    if (this.x - 1 >= 0 && this.y - 2 >= 0) {
+      this.moveMap[this.x - 1][this.y - 2] = true;
+    }
+    return true;
   }
 
   updateAttackMap(): boolean {

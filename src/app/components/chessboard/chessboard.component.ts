@@ -55,7 +55,10 @@ export class ChessboardComponent {
       revert: true,
     });
   }
-  onPieceGrab(x: number, y: number) {
+  onPieceGrab(x: number, y: number): boolean {
+    if (!this.chessboard.board[x][y].piece) {
+      return false;
+    }
     this.moveMap = this.chessboard.board[x][y].piece!.getMoveMap();
     this.move.setSrc(x as PiecePosition, y as PiecePosition);
     this.moveMap.forEach((rank, i) => {
@@ -79,6 +82,7 @@ export class ChessboardComponent {
         }
       });
     });
+    return true;
   }
 
   clearMovableTiles() {
