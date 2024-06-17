@@ -336,8 +336,65 @@ export class Bishop extends Piece {
 }
 
 export class Rook extends Piece {
+  constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
+    super(board, x, y, color);
+    this.value = globalConfig.ROOK_VALUE;
+    this.type = globalConfig.ROOK_TYPE;
+  }
   updateMoveMap(): boolean {
-    return false;
+    let i: PiecePosition = (this.x + 1) as PiecePosition;
+    let j: PiecePosition = this.y;
+    while (i < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i++;
+    }
+    i = this.x - 1;
+    j = this.y;
+    while (i >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i--;
+    }
+    i = this.x;
+    j = this.y + 1;
+    while (j < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      j++;
+    }
+    i = this.x;
+    j = this.y - 1;
+    while (j >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      j--;
+    }
+    return true;
   }
 
   updateAttackMap(): boolean {

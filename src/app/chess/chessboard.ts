@@ -1,4 +1,4 @@
-import { Bishop, King, Knight, Pawn, Piece } from "./pieces";
+import { Bishop, King, Knight, Pawn, Piece, Rook } from "./pieces";
 import { globalConfig } from "../config/global.config";
 import { Move } from "./game";
 
@@ -22,6 +22,8 @@ export class Chessboard {
     new Pawn(this, 1, 5, true);
     new Pawn(this, 1, 6, true);
     new Pawn(this, 1, 7, true);
+
+    new Rook(this, 4, 4, true);
 
     new Pawn(this, 6, 0, false);
     new Pawn(this, 6, 1, false);
