@@ -1,4 +1,4 @@
-import { King, Knight, Piece } from "./pieces";
+import { Bishop, King, Knight, Piece } from "./pieces";
 import { globalConfig } from "../config/global.config";
 import { Move } from "./game";
 
@@ -18,7 +18,7 @@ export class Chessboard {
     new Knight(this, 0, 3, true);
     new Knight(this, 4, 3, true);
     new Knight(this, 7, 3, false);
-    new Knight(this, 4, 5, false);
+    new Bishop(this, 4, 5, false);
     this.update();
   }
 

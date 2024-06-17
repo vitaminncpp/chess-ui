@@ -86,7 +86,6 @@ export abstract class Piece {
   moveTo(x: PiecePosition, y: PiecePosition): Move {
     this.x = x;
     this.y = y;
-    this.update();
     const move = new Move(this.color);
     move.setDest(this.x, this.y);
     move.type = ChessMove.REGULAR_MOVE;
@@ -117,7 +116,7 @@ export abstract class Piece {
 
 export class Pawn extends Piece {
   updateMoveMap(): boolean {
-    return false;
+    return true;
   }
 
   updateAttackMap(): boolean {
@@ -205,8 +204,73 @@ export class Knight extends Piece {
 }
 
 export class Bishop extends Piece {
+  constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
+    super(board, x, y, color);
+    this.value = globalConfig.BISHOP_VALUE;
+    this.type = globalConfig.BISHOP_TYPE;
+  }
   updateMoveMap(): boolean {
-    return false;
+    let i: PiecePosition = (this.x + 1) as PiecePosition;
+    let j: PiecePosition = (this.y + 1) as PiecePosition;
+    while (i < globalConfig.SQUARE_SIZE && j < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i++;
+      j++;
+    }
+
+    i = this.x + 1;
+    j = this.y - 1;
+    while (i < globalConfig.SQUARE_SIZE && j >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i++;
+      j--;
+    }
+
+    i = this.x - 1;
+    j = this.y + 1;
+    while (i >= 0 && j < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i--;
+      j++;
+    }
+
+    i = this.x - 1;
+    j = this.y - 1;
+    while (i >= 0 && j >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i--;
+      j--;
+    }
+
+    return true;
   }
 
   updateAttackMap(): boolean {
