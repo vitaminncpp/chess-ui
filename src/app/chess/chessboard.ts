@@ -1,4 +1,4 @@
-import { Bishop, King, Knight, Piece } from "./pieces";
+import { Bishop, King, Knight, Pawn, Piece } from "./pieces";
 import { globalConfig } from "../config/global.config";
 import { Move } from "./game";
 
@@ -13,12 +13,25 @@ export class Chessboard {
         this.board[i].push(new Tile());
       }
     }
-    new King(this, 1, 2, true);
-    new Knight(this, 2, 3, true);
-    new Knight(this, 0, 3, true);
-    new Knight(this, 4, 3, true);
-    new Knight(this, 7, 3, false);
-    new Bishop(this, 4, 5, false);
+
+    new Pawn(this, 1, 0, true);
+    new Pawn(this, 1, 1, true);
+    new Pawn(this, 1, 2, true);
+    new Pawn(this, 1, 3, true);
+    new Pawn(this, 1, 4, true);
+    new Pawn(this, 1, 5, true);
+    new Pawn(this, 1, 6, true);
+    new Pawn(this, 1, 7, true);
+
+    new Pawn(this, 6, 0, false);
+    new Pawn(this, 6, 1, false);
+    new Pawn(this, 6, 2, false);
+    new Pawn(this, 6, 3, false);
+    new Pawn(this, 6, 4, false);
+    new Pawn(this, 6, 5, false);
+    new Pawn(this, 6, 6, false);
+    new Pawn(this, 6, 7, false);
+
     this.update();
   }
 

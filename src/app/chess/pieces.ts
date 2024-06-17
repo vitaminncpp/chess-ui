@@ -115,7 +115,64 @@ export abstract class Piece {
 }
 
 export class Pawn extends Piece {
+  constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
+    super(board, x, y, color);
+    this.value = globalConfig.PAWN_VALUE;
+    this.type = globalConfig.PAWN_TYPE;
+  }
+
   updateMoveMap(): boolean {
+    if (this.color) {
+      if (this.x + 1 < 8) {
+        if (!this.board.board[this.x + 1][this.y].piece) {
+          this.moveMap[this.x + 1][this.y] = true;
+          if (this.x === 1 && !this.board.board[this.x + 2][this.y].piece) {
+            this.moveMap[this.x + 2][this.y] = true;
+          }
+        }
+        if (this.y + 1 < globalConfig.SQUARE_SIZE) {
+          if (
+            this.board.board[this.x + 1][this.y + 1].piece &&
+            !this.board.board[this.x + 1][this.y + 1].piece!.getColor()
+          ) {
+            this.moveMap[this.x + 1][this.y + 1] = true;
+          }
+        }
+        if (this.y - 1 >= 0) {
+          if (
+            this.board.board[this.x + 1][this.y - 1].piece &&
+            !this.board.board[this.x + 1][this.y - 1].piece!.getColor()
+          ) {
+            this.moveMap[this.x + 1][this.y - 1] = true;
+          }
+        }
+      }
+    } else {
+      if (this.x - 1 >= 0) {
+        if (!this.board.board[this.x - 1][this.y].piece) {
+          this.moveMap[this.x - 1][this.y] = true;
+          if (this.x === 6 && !this.board.board[this.x - 2][this.y].piece) {
+            this.moveMap[this.x - 2][this.y] = true;
+          }
+        }
+        if (this.y + 1 < globalConfig.SQUARE_SIZE) {
+          if (
+            this.board.board[this.x - 1][this.y + 1].piece &&
+            this.board.board[this.x - 1][this.y + 1].piece!.getColor()
+          ) {
+            this.moveMap[this.x - 1][this.y + 1] = true;
+          }
+        }
+        if (this.y - 1 >= 0) {
+          if (
+            this.board.board[this.x - 1][this.y - 1].piece &&
+            this.board.board[this.x - 1][this.y - 1].piece!.getColor()
+          ) {
+            this.moveMap[this.x - 1][this.y - 1] = true;
+          }
+        }
+      }
+    }
     return true;
   }
 
