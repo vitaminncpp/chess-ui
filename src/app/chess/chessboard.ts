@@ -1,4 +1,4 @@
-import { Bishop, King, Knight, Pawn, Piece, Rook } from "./pieces";
+import { Pawn, Piece, Queen, Rook } from "./pieces";
 import { globalConfig } from "../config/global.config";
 import { Move } from "./game";
 
@@ -19,7 +19,7 @@ export class Chessboard {
     new Pawn(this, 1, 2, true);
     new Pawn(this, 1, 3, true);
     new Pawn(this, 1, 4, true);
-    new Pawn(this, 1, 5, true);
+    new Queen(this, 1, 5, true);
     new Pawn(this, 1, 6, true);
     new Pawn(this, 1, 7, true);
 
@@ -44,6 +44,7 @@ export class Chessboard {
     retMove.setSrc(move.xSrc, move.ySrc);
     return retMove;
   }
+
   update(): boolean {
     this.board.forEach(rank => {
       rank.forEach(tile => {
