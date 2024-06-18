@@ -1,0 +1,23 @@
+<div class="chessboard">
+  <table class="grid" id="chessgrid">
+    <th></th>
+    <tbody>
+      @for (rank of board.slice().reverse(); let i = $index; track i) {
+        <tr class="rank">
+          @for (tile of rank; let j = $index; track j) {
+            <td [id]="'' + i + '-' + j" [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
+              <div class="piece" (mousedown)="onPieceGrab(i, j)">
+                <img
+                  *ngIf="board[i][j]"
+                  [src]="appData.PIECE_IMG[board[i][j]!.color ? 1 : 0][board[i][j]!.piece]"
+                  alt="{{ appData.PIECE_IMG[board[i][j]!.color ? 1 : 0][board[i][j]!.piece] }}"
+                  [width]="globalConfig.tileSize"
+                  [height]="globalConfig.tileSize" />
+              </div>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

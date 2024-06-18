@@ -1,0 +1,30 @@
+.chessboard {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: solid 1px red;
+  table.grid {
+    tbody {
+      tr {
+        td.tile {
+          height: 80px;
+          width: 80px;
+          .piece {
+            cursor: grab;
+            height: 80px;
+            width: 80px;
+            :active {
+              cursor: grabbing;
+            }
+          }
+        }
+        td.dark {
+          background-color: #b88762;
+        }
+        td.light {
+          background-color: #edd6b0;
+        }
+      }
+    }
+  }
+}
