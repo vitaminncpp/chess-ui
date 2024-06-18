@@ -3,24 +3,47 @@
   justify-content: center;
   align-content: center;
   border: solid 1px red;
+
   table.grid {
+    border-spacing: 0;
+
     tbody {
       tr {
         td.tile {
+          position: relative;
           height: 80px;
           width: 80px;
+
           .piece {
+            position: absolute;
+            top: 0;
+            left: 0;
             cursor: grab;
-            height: 80px;
-            width: 80px;
-            :active {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+
+            &:active {
               cursor: grabbing;
             }
           }
+
+          .mark {
+            display: none;
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            border-radius: 50%;
+            height: 40%;
+            width: 40%;
+            background-color: #473f3944;
+          }
         }
+
         td.dark {
           background-color: #b88762;
         }
+
         td.light {
           background-color: #edd6b0;
         }
