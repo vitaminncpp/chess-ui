@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  border: solid 1px red;
 
   table.grid {
     border-spacing: 0;
@@ -30,6 +29,8 @@
 
           .mark {
             display: none;
+            justify-content: center;
+            align-items: center;
             position: absolute;
             top: 30%;
             left: 30%;

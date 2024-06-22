@@ -1,21 +1,30 @@
 import { Chessboard } from "./chessboard";
 import { PiecePosition } from "../type/chess.type";
 import { ChessMove } from "../type/chess.enum";
+import { Player } from "./players";
 
 export class Game {
   board: Chessboard;
+  playerW: Player;
+  playerB: Player;
 
   constructor() {
     this.board = new Chessboard();
+    this.playerW = new Player(this.board, true);
+    this.playerB = new Player(this.board, false);
+    this.update();
   }
+
   getBoard() {
     return this.board;
   }
+
   move(move: Move): Move {
     const ret: Move = this.board.move(move);
     this.update();
     return ret;
   }
+
   update(): boolean {
     return this.board.update();
   }
@@ -34,12 +43,14 @@ export class Move {
     this.player = player;
     this.init();
   }
+
   init() {
     this.xSrc = -1;
     this.ySrc = -1;
     this.xDest = -1;
     this.yDest = -1;
   }
+
   setSrc(x: PiecePosition, y: PiecePosition): boolean {
     this.xSrc = x;
     this.ySrc = y;
