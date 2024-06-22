@@ -63,7 +63,9 @@ export class ChessboardComponent {
     if (!this.chessboard.board[x][y].piece) {
       return false;
     }
-    this.moveMap = this.chessboard.board[x][y].piece!.getMoveMap();
+    const color = this.chessboard.board[x][y].piece!.getColor();
+    this.moveMap = this.game.getMoveMapFor(x, y, color);
+    this.move = new Move(color);
     this.move.setSrc(x as PiecePosition, y as PiecePosition);
     this.moveMap.forEach((rank, i) => {
       rank.forEach((tile, j) => {
@@ -74,7 +76,7 @@ export class ChessboardComponent {
             },
           });
           $(`#${i}-${j} > .mark`).css({
-            display: "block",
+            display: "flex",
           });
         } else {
           try {

@@ -37,4 +37,8 @@ export class Player {
     this.pieces[1].push(new Knight(this.board, this.color ? 0 : 7, 6, this.color));
     this.pieces[1].push(new Rook(this.board, this.color ? 0 : 7, 7, this.color));
   }
+
+  setOpponent(opponent: Player) {
+    this.opponent = opponent;
+  }
 }
