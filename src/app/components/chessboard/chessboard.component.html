@@ -1,11 +1,14 @@
 <div class="chessboard">
-  <table class="grid" id="chessgrid">
+  <table class="grid loader-container" id="chessgrid">
+    <div class="loader">
+      <div class="spinner"></div>
+    </div>
     <th></th>
     <tbody>
       @for (rank of board; let i = $index; track i) {
         <tr class="rank">
           @for (tile of rank; let j = $index; track j) {
-            <td [id]="'' + i + '-' + j" [class]="{ tile:true,dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
+            <td [id]="'' + i + '-' + j" [class]="{ tile: true, dark: (i + j) % 2 === 1, light: (i + j) % 2 === 0 }">
               <div class="piece" (mousedown)="onPieceGrab(i, j)">
                 <img
                   *ngIf="board[i][j]"
@@ -14,8 +17,8 @@
                   [width]="globalConfig.tileSize"
                   [height]="globalConfig.tileSize" />
               </div>
-              <div class="mark">
-              </div>
+              <div class="mark"></div>
+              <div class="mark"></div>
             </td>
           }
         </tr>
