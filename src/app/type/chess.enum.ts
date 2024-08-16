@@ -1,6 +1,7 @@
 export const enum ChessMove {
   NOT_APPLICABLE,
   ILLEGAL_MOVE,
+  WRONG_PLAYER,
   REGULAR_MOVE,
   CAPTURE_MOVE,
   PROMOTION_MOVE,
