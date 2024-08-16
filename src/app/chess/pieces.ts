@@ -28,6 +28,7 @@ export abstract class Piece {
     this.board.board[x][y].piece = this;
     this.init();
   }
+
   init() {
     this.moveMap = [];
     this.attackMap = [];
@@ -41,13 +42,17 @@ export abstract class Piece {
     }
     this.reset();
   }
+
   update() {
     this.reset();
     this.updateMoveMap();
     this.updateAttackMap();
   }
+
   abstract updateMoveMap(): boolean;
+
   abstract updateAttackMap(): boolean;
+
   resetMoveMap(): boolean {
     this.moveMap.forEach(rank => {
       for (let i = 0; i < globalConfig.SQUARE_SIZE; i++) {
@@ -56,6 +61,7 @@ export abstract class Piece {
     });
     return true;
   }
+
   resetAttackMap(): boolean {
     this.attackMap.forEach(rank => {
       for (let i = 0; i < globalConfig.SQUARE_SIZE; i++) {
@@ -68,21 +74,25 @@ export abstract class Piece {
   getColor(): boolean {
     return this.color;
   }
+
   getType(): PieceType {
     return this.type;
   }
+
   capture(): boolean {
     this.alive = false;
     this.x = -1;
     this.y = -1;
     return this.alive;
   }
+
   giveLife(i: PiecePosition, j: PiecePosition): boolean {
     this.x = i;
     this.y = j;
     this.alive = true;
     return this.alive;
   }
+
   moveTo(x: PiecePosition, y: PiecePosition): Move {
     this.x = x;
     this.y = y;
@@ -91,20 +101,25 @@ export abstract class Piece {
     move.type = ChessMove.REGULAR_MOVE;
     return move;
   }
+
   testForMoveMap(x: PiecePosition, y: PiecePosition): boolean {
     return false;
   }
+
   reset(): boolean {
     this.resetMoveMap();
     this.resetAttackMap();
     return true;
   }
+
   getX() {
     return this.x;
   }
+
   getY() {
     return this.y;
   }
+
   getMoveMap(): boolean[][] {
     return this.moveMap;
   }
@@ -187,6 +202,7 @@ export class Knight extends Piece {
     this.value = globalConfig.KNIGHT_VALUE;
     this.type = globalConfig.KNIGHT_TYPE;
   }
+
   updateMoveMap(): boolean {
     if (this.x + 2 < globalConfig.SQUARE_SIZE && this.y + 1 < globalConfig.SQUARE_SIZE) {
       if (
@@ -266,6 +282,7 @@ export class Bishop extends Piece {
     this.value = globalConfig.BISHOP_VALUE;
     this.type = globalConfig.BISHOP_TYPE;
   }
+
   updateMoveMap(): boolean {
     let i: PiecePosition = (this.x + 1) as PiecePosition;
     let j: PiecePosition = (this.y + 1) as PiecePosition;
@@ -341,6 +358,7 @@ export class Rook extends Piece {
     this.value = globalConfig.ROOK_VALUE;
     this.type = globalConfig.ROOK_TYPE;
   }
+
   updateMoveMap(): boolean {
     let i: PiecePosition = (this.x + 1) as PiecePosition;
     let j: PiecePosition = this.y;
@@ -403,7 +421,127 @@ export class Rook extends Piece {
 }
 
 export class Queen extends Piece {
+  constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
+    super(board, x, y, color);
+    this.value = globalConfig.QUEEN_VALUE;
+    this.type = globalConfig.QUEEN_TYPE;
+  }
+
   updateMoveMap(): boolean {
+    let i: PiecePosition = (this.x + 1) as PiecePosition;
+    let j: PiecePosition = (this.y + 1) as PiecePosition;
+    while (i < globalConfig.SQUARE_SIZE && j < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i++;
+      j++;
+    }
+
+    i = this.x + 1;
+    j = this.y - 1;
+    while (i < globalConfig.SQUARE_SIZE && j >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i++;
+      j--;
+    }
+
+    i = this.x - 1;
+    j = this.y + 1;
+    while (i >= 0 && j < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i--;
+      j++;
+    }
+    i = this.x - 1;
+    j = this.y - 1;
+    while (i >= 0 && j >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i--;
+      j--;
+    }
+
+    i = this.x + 1;
+    j = this.y;
+    while (i < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i++;
+    }
+
+    i = this.x - 1;
+    j = this.y;
+    while (i >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      i--;
+    }
+
+    i = this.x;
+    j = this.y + 1;
+    while (j < globalConfig.SQUARE_SIZE) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      j++;
+    }
+    i = this.x;
+    j = this.y - 1;
+    while (j >= 0) {
+      if (!this.board.board[i][j].piece) {
+        this.moveMap[i][j] = true;
+      } else {
+        if (this.board.board[i][j].piece!.getColor() !== this.color) {
+          this.moveMap[i][j] = true;
+        }
+        break;
+      }
+      j--;
+    }
+
     return false;
   }
 
@@ -414,12 +552,14 @@ export class Queen extends Piece {
 
 export class King extends Piece {
   check: boolean = false;
+
   constructor(board: Chessboard, x: PiecePosition, y: PiecePosition, color: boolean) {
     super(board, x, y, color);
     this.value = globalConfig.KING_VALUE;
     this.type = globalConfig.KING_TYPE;
     this.check = false;
   }
+
   updateMoveMap(): boolean {
     if (this.x - 1 >= 0) {
       if (

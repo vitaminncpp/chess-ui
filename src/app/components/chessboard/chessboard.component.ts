@@ -32,6 +32,7 @@ export class ChessboardComponent {
     this.board = globalConfig.initialPosition;
     this.updateBoard();
   }
+
   updateBoard(): boolean {
     this.chessboard.board.forEach((rank: Tile[], i: number) => {
       rank.forEach((tile: Tile, j: number) => {
@@ -44,7 +45,9 @@ export class ChessboardComponent {
     });
     return false;
   }
+
   ngOnInit() {}
+
   ngAfterViewChecked(): void {
     this.jqueryRerender();
   }
@@ -55,11 +58,14 @@ export class ChessboardComponent {
       revert: true,
     });
   }
+
   onPieceGrab(x: number, y: number): boolean {
     if (!this.chessboard.board[x][y].piece) {
       return false;
     }
-    this.moveMap = this.chessboard.board[x][y].piece!.getMoveMap();
+    const color = this.chessboard.board[x][y].piece!.getColor();
+    this.moveMap = this.game.getMoveMapFor(x, y, color);
+    this.move = new Move(color);
     this.move.setSrc(x as PiecePosition, y as PiecePosition);
     this.moveMap.forEach((rank, i) => {
       rank.forEach((tile, j) => {
@@ -69,13 +75,13 @@ export class ChessboardComponent {
               this.drop(i as PiecePosition, j as PiecePosition);
             },
           });
-          $(`#${i}-${j}`).css({
-            background: "red",
+          $(`#${i}-${j} > .mark`).css({
+            display: "flex",
           });
         } else {
           try {
-            $(`#${i}-${j}`).css({
-              background: (i + j) % 2 === 0 ? "#edd6b0" : "#b88762",
+            $(`#${i}-${j} > .mark`).css({
+              display: "none",
             });
             $(`#${i}-${j}`).droppable("destroy");
           } catch (err) {}
@@ -86,18 +92,16 @@ export class ChessboardComponent {
   }
 
   clearMovableTiles() {
-    for (let i = 0; i < globalConfig.SQUARE_SIZE; i++) {
-      for (let j = 0; j < globalConfig.SQUARE_SIZE; j++) {
-        try {
-          $(`#${i}-${j}`).css({
-            background: (i + j) % 2 === 0 ? "#edd6b0" : "#b88762",
-          });
-          $(`#${i}-${j}`).droppable("destroy");
-        } catch (err) {}
-      }
-    }
+    $(`td.tile > .mark`).css({
+      display: "none",
+    });
+    try {
+      $(`td.tile > .mark`).droppable("destroy");
+    } catch (err) {}
+
     this.moveMap = null;
   }
+
   drop(x: PiecePosition, y: PiecePosition) {
     this.clearMovableTiles();
     this.move.setDest(x, y);
